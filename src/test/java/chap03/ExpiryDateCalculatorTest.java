@@ -148,4 +148,35 @@ public class ExpiryDateCalculatorTest {
                 LocalDate.of(2021, 2, 28));
     }
 
+    @Test
+    void 십만원_이상_납부하면_십만원당_1년으로_계산하고_나머지는_따로_만료일_계산() {
+        assertExpiryDate(
+                PayData.builder()
+                        .billingDate(LocalDate.of(2019, 1, 28))
+                        .payAmount(130_000)
+                        .build(),
+                LocalDate.of(2020, 4, 28));
+
+        assertExpiryDate(
+                PayData.builder()
+                        .billingDate(LocalDate.of(2019, 1, 28))
+                        .payAmount(170_000)
+                        .build(),
+                LocalDate.of(2020, 8, 28));
+
+        assertExpiryDate(
+                PayData.builder()
+                        .billingDate(LocalDate.of(2019, 1, 28))
+                        .payAmount(200_000)
+                        .build(),
+                LocalDate.of(2021, 1, 28));
+
+        assertExpiryDate(
+                PayData.builder()
+                        .billingDate(LocalDate.of(2019, 1, 28))
+                        .payAmount(250_000)
+                        .build(),
+                LocalDate.of(2021, 6, 28));
+    }
+
 }
